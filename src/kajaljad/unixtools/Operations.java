@@ -2,17 +2,25 @@ package kajaljad.unixtools;
 
 public class Operations {
     public int countLines(String text) {
-        String[] res = text.split("\n");
-        return res.length;
+        int noOfLines = 0;
+        String[] result = text.split("\r\n");
+        for (String i : result) {
+            noOfLines += i.split("\n").length;
+        }
+        return noOfLines;
     }
 
     public int countWords(String text) {
-        String[] res = text.split(" ");
-        return res.length;
+        int noOfWords = 0;
+        String[] result = text.split("\r\n");
+        for (String item : result) {
+            noOfWords += item.split(" ").length;
+        }
+        return noOfWords;
     }
 
     public int countCharacters(String text) {
-        String[] res = text.split("");
-        return res.length;
+        return text.length();
     }
 }
+
