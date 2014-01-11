@@ -14,7 +14,7 @@ public class Cut {
             if (args.length == 2) {
                 fileContent = operations.readFile(args[1]);
                 int fieldNumber = Integer.parseInt(args[0].substring(2, 3));
-                operations.cutByField(fieldNumber, fileContent);
+                operations.cutByField(fileContent);
             }
         } catch (Exception e) {
             System.out.println("Error");
