@@ -11,4 +11,10 @@ public class CutOperations extends MyFileReader{
                 System.out.println(content[fieldNumber-1]);
         }
     }
+    public void cutByDelimeter(int fieldNumber,String separator,String input) {
+        String[] result = input.split("\r\n");
+        for (int i = 0; i < result.length-1; i++) {
+            System.out.println(result[i].split(separator)[fieldNumber]);
+        }
+    }
 }
