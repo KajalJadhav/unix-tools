@@ -1,6 +1,6 @@
 package kajaljad.unixtools;
 
-class HeadOperations extends MyFileReader{
+class HeadOperations extends MyFileReader {
     public void head(int size, String text) {
         String[] result = text.split("\r\n");
         for (int i = 0; i < size; i++) {
@@ -18,11 +18,10 @@ public class Head {
             if (args.length == 2) {
                 length = Integer.parseInt(args[0]) * (-1);
                 fileContent = operations.readFile(args[1]);
-            }
-            else
+            } else
                 fileContent = operations.readFile(args[0]);
         } catch (Exception e) {
-            System.out.println("Error");
+            System.err.println("Error");
         }
         operations.head(length, fileContent);
     }

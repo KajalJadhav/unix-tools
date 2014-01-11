@@ -7,7 +7,7 @@ public class Operations {
         for (String i : result) {
             noOfLines += i.split("\n").length;
         }
-        return noOfLines-1;
+        return noOfLines - 1;
     }
 
     public int countWords(String text) {
@@ -16,11 +16,11 @@ public class Operations {
         for (String item : result) {
             noOfWords += item.split(" ").length;
         }
-        return noOfWords-1;
+        return noOfWords - 1;
     }
 
     public int countCharacters(String text) {
-        return text.length()-1;
+        return text.length() - 1;
     }
 }
 

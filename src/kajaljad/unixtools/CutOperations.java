@@ -11,7 +11,7 @@ public class CutOperations extends MyFileReader {
     public void cutByDelimeter(int fieldNumber, String separator, String input) {
         String[] result = input.split("\r\n");
         for (int i = 0; i < result.length; i++) {
-            String[] content = result[i].split(" ");
+            String[] content = result[i].split(separator);
             if (content.length < fieldNumber)
                 System.out.println("\n");
             else

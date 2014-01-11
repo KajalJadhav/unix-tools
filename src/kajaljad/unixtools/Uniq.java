@@ -2,11 +2,11 @@ package kajaljad.unixtools;
 
 class UniqOperations extends MyFileReader {
     public void uniq(String text) {
-        String[] result;
-        result = text.split("\r\n");
-        for (int i = 1; i < result.length - 1; i++) {
-            if (0 != result[i].compareTo(result[i + 1])) {
-                System.out.println(result[i]);
+        String[] fileContent = text.split("\r\n");
+        System.out.println(fileContent[0]);
+        for (int i = 1; i < fileContent.length; i++) {
+            if (!fileContent[i].equals(fileContent[i - 1])) {
+                System.out.println(fileContent[i]);
             }
         }
     }
