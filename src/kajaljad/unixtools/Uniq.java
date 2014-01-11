@@ -1,9 +1,6 @@
 package kajaljad.unixtools;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-
-class UniqOperations {
+class UniqOperations extends MyFileReader {
     public void uniq(String text) {
         String[] result;
         result = text.split("\r\n");
@@ -18,14 +15,9 @@ class UniqOperations {
 public class Uniq {
     public static void main(String[] args) {
         UniqOperations operations = new UniqOperations();
-        BufferedReader bufferedReader;
         String fileContent = null;
         try {
-            bufferedReader = new BufferedReader(new FileReader(args[0]));
-            String currentLine;
-            while ((currentLine = bufferedReader.readLine()) != null) {
-                fileContent += "\r\n" + currentLine;
-            }
+            fileContent = operations.readFile(args[0]);
         } catch (Exception e) {
             System.out.println("Error");
         }
