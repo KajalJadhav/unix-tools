@@ -1,15 +1,24 @@
 package kajaljad.unixtools;
 
-import com.sun.jndi.url.dns.dnsURLContext;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 
-/**
- * Created by kajaljad on 1/10/14.
- */
+class CutOperations {
+    public void cut(int fieldNumber, String input) {
+        String lines[] = input.split("\n");
+        String words[];
+        String result = "";
+        for (int i = 0; i < lines.length; i++) {
+            words = lines[i].split(" ");
+            result = result + words[fieldNumber - 1] + "\r\n";
+        }
+        System.out.println(result);
+    }
+}
+
 public class Cut {
     public static void main(String[] args) {
+        CutOperations operations = new CutOperations();
         String fileContent = null;
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(args[0]));
@@ -20,5 +29,6 @@ public class Cut {
         } catch (Exception e) {
             System.out.println("Error");
         }
+        operations.cut(Integer.parseInt(args[1]), fileContent);
     }
 }
