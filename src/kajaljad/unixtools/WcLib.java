@@ -1,13 +1,13 @@
 package kajaljad.unixtools;
 
-public class Operations {
+public class WcLib {
     public int countLines(String text) {
         int noOfLines = 0;
         String[] result = text.split("\r\n");
         for (String i : result) {
             noOfLines += i.split("\n").length;
         }
-        return noOfLines - 1;
+        return noOfLines;
     }
 
     public int countWords(String text) {
@@ -16,11 +16,11 @@ public class Operations {
         for (String item : result) {
             noOfWords += item.split(" ").length;
         }
-        return noOfWords - 1;
+        return noOfWords;
     }
 
     public int countCharacters(String text) {
-        return text.length() - 1;
+        return text.length();
     }
 }
 

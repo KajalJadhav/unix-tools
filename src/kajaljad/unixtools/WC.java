@@ -1,26 +1,14 @@
 package kajaljad.unixtools;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-
 public class WC {
     public static void main(String[] args) {
-        Operations operations = new Operations();
+        WcLib operations = new WcLib();
+        String fileData;
         int lines, words, characters;
-
-        String fileContent = null;
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(args[0]));
-            String currentLine;
-            while ((currentLine = bufferedReader.readLine()) != null) {
-                fileContent += "\r\n" + currentLine;
-            }
-        } catch (Exception e) {
-            System.out.println("Error");
-        }
-        lines = operations.countLines(fileContent);
-        words = operations.countWords(fileContent);
-        characters = operations.countCharacters(fileContent);
+        fileData = new MyFileReader().readFile(args[0]);
+        lines = operations.countLines(fileData);
+        words = operations.countWords(fileData);
+        characters = operations.countCharacters(fileData);
         System.out.println(lines + " " + words + " " + characters + " " + args[0]);
     }
 }
