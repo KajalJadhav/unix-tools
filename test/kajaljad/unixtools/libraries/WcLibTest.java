@@ -1,4 +1,4 @@
-package kajaljad.unixtools;
+package kajaljad.unixtools.libraries;
 
 import kajaljad.unixtools.libraries.WcLib;
 import org.junit.Test;
