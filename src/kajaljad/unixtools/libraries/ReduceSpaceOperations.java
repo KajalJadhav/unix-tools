@@ -1,9 +1,11 @@
-package kajaljad.unixtools;
+package kajaljad.unixtools.libraries;
+
+import kajaljad.unixtools.filesystem.MyFileReader;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 
-class ReduceSpaceOperations extends MyFileReader {
+public class ReduceSpaceOperations extends MyFileReader {
     BufferedWriter writeInto;
 
     public ReduceSpaceOperations() {
@@ -23,13 +25,5 @@ class ReduceSpaceOperations extends MyFileReader {
         } catch (Exception e) {
             System.err.println("Error");
         }
-    }
-}
-
-public class ReduceSpace {
-    public static void main(String[] args) {
-        ReduceSpaceOperations operations = new ReduceSpaceOperations();
-        String fileContent = operations.readFile(args[0]);
-        operations.reduceSpace(fileContent);
     }
 }

@@ -1,4 +1,6 @@
-package kajaljad.unixtools;
+package kajaljad.unixtools.cli;
+
+import kajaljad.unixtools.libraries.CutOperations;
 
 public class Cut {
     public static void main(String[] args) {

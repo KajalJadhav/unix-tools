@@ -1,4 +1,4 @@
-package kajaljad.unixtools;
+package kajaljad.unixtools.libraries;
 
 public class WcLib {
     public int countLines(String text) {

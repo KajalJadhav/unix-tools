@@ -1,5 +1,6 @@
 package kajaljad.unixtools;
 
+import kajaljad.unixtools.libraries.WcLib;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;

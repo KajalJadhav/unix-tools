@@ -1,4 +1,6 @@
-package kajaljad.unixtools;
+package kajaljad.unixtools.libraries;
+
+import kajaljad.unixtools.filesystem.MyFileReader;
 
 public class CutOperations extends MyFileReader {
     public void cutByField(String input) {

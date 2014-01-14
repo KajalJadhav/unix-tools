@@ -1,4 +1,7 @@
-package kajaljad.unixtools;
+package kajaljad.unixtools.cli;
+
+import kajaljad.unixtools.libraries.HeadLib;
+import kajaljad.unixtools.filesystem.MyFileReader;
 
 public class Head {
     public static void main(String[] args) {

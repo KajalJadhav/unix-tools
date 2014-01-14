@@ -1,4 +1,7 @@
-package kajaljad.unixtools;
+package kajaljad.unixtools.cli;
+
+import kajaljad.unixtools.filesystem.MyFileReader;
+import kajaljad.unixtools.libraries.WcLib;
 
 public class WC {
     public static void main(String[] args) {

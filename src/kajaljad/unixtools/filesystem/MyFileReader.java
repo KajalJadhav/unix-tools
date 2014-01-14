@@ -1,4 +1,4 @@
-package kajaljad.unixtools;
+package kajaljad.unixtools.filesystem;
 
 import java.io.File;
 import java.io.FileNotFoundException;

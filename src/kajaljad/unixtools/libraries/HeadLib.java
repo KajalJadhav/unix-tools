@@ -1,4 +1,4 @@
-package kajaljad.unixtools;
+package kajaljad.unixtools.libraries;
 
 public class HeadLib {
     String text;
