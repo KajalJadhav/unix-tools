@@ -1,15 +1,14 @@
 package kajaljad.unixtools.libraries;
 
-import kajaljad.unixtools.filesystem.MyFileReader;
-
-public class UniqOperations extends MyFileReader {
-    public void uniq(String text) {
-        String[] fileContent = text.split("\r\n");
-        System.out.println(fileContent[0]);
-        for (int i = 1; i < fileContent.length; i++) {
-            if (!fileContent[i].equals(fileContent[i - 1])) {
-                System.out.println(fileContent[i]);
-            }
+public class UniqOperations {
+    public String uniq(String text) {
+        String[] lines = text.split("\r\n");
+        StringBuilder stringBuilder = new StringBuilder();
+        for(int i =0; i< lines.length-1; i++){
+            if(!(lines[i].equalsIgnoreCase(lines[i + 1])))
+                stringBuilder.append(lines[i]).append("\r\n");
         }
+        stringBuilder.append(lines[lines.length-1]);
+        return stringBuilder.toString();
     }
 }
