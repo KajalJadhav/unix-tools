@@ -8,7 +8,7 @@ public class TailOperationsTest {
     String input = "Kajal\r\nAnant\r\nJadhav\r\nLaxit\r\nAnant\r\nJadhav\r\nVaidehi\r\nSunil\r\nJadhav\r\nAnant\r\nShankar\r\nJadhav\r\n";
 
     @Test
-    public void testDisplay_tail() throws Exception {
+    public void test_display_tail_for_specific_lines() throws Exception {
         TailOperations tailOperations = new TailOperations(3, input);
         String expected = "Anant\r\nShankar\r\nJadhav\r\n";
         String actual = tailOperations.tail();
@@ -16,7 +16,7 @@ public class TailOperationsTest {
     }
 
     @Test
-    public void testDisplayDefaultTail() throws Exception {
+    public void test_display_default_tail() throws Exception {
         TailOperations tailOperations = new TailOperations(10, input);
         String expected = "Jadhav\r\nLaxit\r\nAnant\r\nJadhav\r\nVaidehi\r\nSunil\r\nJadhav\r\nAnant\r\nShankar\r\nJadhav\r\n";
         String actual = tailOperations.tail();
