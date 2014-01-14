@@ -1,29 +1,26 @@
 package kajaljad.unixtools.libraries;
 
-import kajaljad.unixtools.filesystem.MyFileReader;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.io.IOException;
 
-public class ReduceSpaceOperations extends MyFileReader {
-    BufferedWriter writeInto;
-
+public class ReduceSpaceOperations {
+    BufferedWriter writeTo;
     public ReduceSpaceOperations() {
         try {
-            writeInto = new BufferedWriter(new FileWriter("data.txt"));
-        } catch (Exception e) {
-            System.err.println("Error");
+            writeTo = new BufferedWriter(new FileWriter("d.txt"));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
-
-    public void reduceSpace(String fileContent) {
-        try {
-            String content = fileContent.replaceAll("[ ]+", " ");
-            System.out.println(content);
-            writeInto.write(content);
-            writeInto.close();
-        } catch (Exception e) {
-            System.err.println("Error");
+    public String spaceReducer(String fileContent) throws IOException {
+        String[] result = fileContent.split("\r\n");
+        String data = new String();
+        for (int i = 0; i < result.length; i++){
+            data = data + result[i].replaceAll("\\s+", " ")+"\r\n";
+            writeTo.write(data+"\r\n");
         }
+        writeTo.close();
+        return data;
     }
 }
