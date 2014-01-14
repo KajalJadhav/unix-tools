@@ -16,7 +16,7 @@ public class Sort {
                 System.out.println(s);
         } else {
             fileContent = rf.readFile(args[0]);
-            sortedData = so.sort(fileContent);
+            sortedData = so.sortData(fileContent);
             for (String s : sortedData)
                 System.out.println(s);
         }
