@@ -8,7 +8,7 @@ public class ReduceSpaceOperations {
     BufferedWriter writeTo;
     public ReduceSpaceOperations() {
         try {
-            writeTo = new BufferedWriter(new FileWriter("d.txt"));
+            writeTo = new BufferedWriter(new FileWriter("data.txt"));
         } catch (IOException e) {
             e.printStackTrace();
         }
