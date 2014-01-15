@@ -18,7 +18,25 @@ public class HeadLibTest {
         HeadLib operations = new HeadLib();
         String[] args = {"-n5", "names.txt"};
         int actual = operations.getNumberOfLines(args);
-        assertEquals(actual, 5);
+        assertEquals(5, actual);
+    }
+
+    @Test
+    public void getHeadLinesWhenNumberOfLinesAreNotSpecified() throws Exception {
+        HeadLib operations = new HeadLib();
+        String input = "Kajal\r\nAnant\r\nJadhav\r\nLaxit\r\nAnant\r\nJadhav\r\nVaidehi\r\nSunil\r\nJadhav\r\n";
+        String expected = "Kajal\r\nAnant\r\nJadhav\r\nLaxit\r\nAnant\r\nJadhav\r\nVaidehi\r\nSunil\r\nJadhav\r\n";
+        String actual = operations.getHeadLines(input, 10);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void getHeadLinesWhenNumberOfLinesAreSpecified() throws Exception {
+        HeadLib operations = new HeadLib();
+        String input = "Kajal\r\nAnant\r\nJadhav\r\nLaxit\r\nAnant\r\nJadhav\r\nVaidehi\r\nSunil\r\nJadhav\r\n";
+        String expected = "Kajal\r\nAnant\r\nJadhav\r\nLaxit\r\nAnant\r\n";
+        String actual = operations.getHeadLines(input, 5);
+        assertEquals(expected, actual);
     }
 }
 
