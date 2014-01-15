@@ -64,4 +64,3 @@ public class HeadLibTest {
         assertEquals(null, actualFileName);
     }
 }
-
