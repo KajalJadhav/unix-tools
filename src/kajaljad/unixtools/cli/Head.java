@@ -5,23 +5,40 @@ import kajaljad.unixtools.filesystem.MyFileReader;
 
 public class Head {
     public static void main(String[] args) {
-        MyFileReader rf = new MyFileReader();
         int length = 10;
-        String fileContent;
         String fileName = args[0];
-        if (args.length == 2) {
-            length = Math.abs(Integer.parseInt(args[0]));
-            fileName = args[1];
-        }
-        fileContent = rf.readFile(fileName);
-        HeadLib headOperations = new HeadLib(length,fileContent);
-        String lines = headOperations.head();
-        String[] result = lines.split("\r\n");
+        String fileData;
         StringBuilder stringBuilder = new StringBuilder();
-        for (String s : result) {
-            stringBuilder.append(s);
+        Head head = new Head();
+        MyFileReader readContent = new MyFileReader();
+        String[] processArgs = head.getArguements(args);
+        if (processArgs[1] != null) {
+            length = Math.abs(Integer.parseInt(processArgs[1]));
+            fileName = processArgs[0];
+        }
+        fileData = readContent.readFile(fileName);
+        HeadLib headLib = new HeadLib(length, fileData);
+        String lines = headLib.head();
+        String[] result = lines.split("\r\n");
+        for (String line : result) {
+            stringBuilder.append(line);
             stringBuilder.append("\n");
         }
         System.out.println(stringBuilder.toString());
+    }
+
+    String[] getArguements(String[] args) {
+        String[] options = new String[2];
+        for (int i = 0; i < args.length; i++) {
+            if (Head.isNumber(args[i]))
+                options[1] = args[i];
+            if (!Head.isNumber(args[i]))
+                options[0] = args[i];
+        }
+        return options;
+    }
+
+    static boolean isNumber(String args) {
+        return args.matches("-.*");
     }
 }
