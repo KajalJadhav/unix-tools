@@ -58,6 +58,21 @@ public class WcLibTest {
         WcLib operation = new WcLib("Kajal Anant Jadhav\r\nLaxit Anant Jadhav");
         int expected = 38;
         int actual = operation.countCharacters();
-        assertEquals(expected,actual);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void getFileNameWhenFileNameIsPresent() throws Exception {
+        String[] args = {"a.txt"};
+        String expected = "a.txt";
+        String actual = new WcFileHandler().getFileName(args);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void getFileNameWhenFileNameIsNotPresent() throws Exception {
+        String[] args = {"-l", "-c", "-w"};
+        String actual = new WcFileHandler().getFileName(args);
+        assertEquals(null, actual);
     }
 }
