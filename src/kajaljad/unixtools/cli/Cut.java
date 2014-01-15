@@ -3,50 +3,35 @@ package kajaljad.unixtools.cli;
 import kajaljad.unixtools.filesystem.MyFileReader;
 import kajaljad.unixtools.libraries.CutOperations;
 
-import java.io.IOException;
-
 public class Cut {
-        public static void main(String args[])throws IOException {
-            Cut cutclient = new Cut();
-            MyFileReader fs = new MyFileReader();
-            CutOperations cut = new CutOperations();
-
-            String properArgv[] = cutclient.getArguments(args);
-            int fieldValue = Integer.parseInt(properArgv[0].substring(2));
-            String delimitor = properArgv[1].substring(2);
-            String fileData = fs.readFile(properArgv[2]);
-            StringBuilder columnData = cut.cutCount(fieldValue, delimitor, fileData);
-            System.out.println(columnData);
+    public static void main(String[] args) {
+        CutOperations operations = new CutOperations();
+        MyFileReader readContent = new MyFileReader();
+        String fileContent;
+        if (args.length == 3) {           // for delimiter
+            String separator = args[1].substring(2, 3);
+            int fieldNumber = Integer.parseInt(args[0].substring(2, 3));
+            fileContent = readContent.readFile(args[2]);
+            String data = operations.cutByFieldAndSeparator(fieldNumber, separator, fileContent);
+            String[] result = data.split("\r\n");
+            for (Object o : result)
+                System.out.println(o);
         }
-
-        String[] getArguments(String[] arg) {
-            String options[] = new String[3];
-            for (int i = 0; i < arg.length; i++) {
-                if (Cut.isField(arg[i]))
-                    options[0] = arg[i];
-                if (Cut.isDelimiter(arg[i]))
-                    options[1] = arg[i];
-                if (!Cut.isFile(arg[i]))
-                    options[2] = arg[i];
-                if (Cut.isCharacter(arg[i]))
-                    options[3] = arg[i];
+        try {
+            if (args.length == 2) {           // for field and character
+                fileContent = readContent.readFile(args[1]);
+                int fieldNumber = Integer.parseInt(args[0].substring(2, 3));
+                String character = args[0].substring(0, 2);
+                String data;
+                if (0 == character.compareTo("-f"))
+                    data = operations.cutByField(fileContent);
+                else data = operations.cutByCharacter(fieldNumber, fileContent);
+                String[] result = data.split("\r\n");
+                for (Object o : result)
+                    System.out.println(o);
             }
-            return options;
+        } catch (Exception e) {
+            System.err.println("Error");
         }
-
-    static boolean isDelimiter(String arg) {
-        return arg.matches("-d.*");
-    }
-
-    static boolean isField(String arg) {
-        return arg.matches("-f.*");
-    }
-
-    static boolean isCharacter(String arg) {
-        return arg.matches("-c.*");
-    }
-
-    static boolean isFile(String arg) {
-        return arg.matches("-.*");
     }
 }
