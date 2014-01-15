@@ -47,5 +47,21 @@ public class HeadLibTest {
         String actual = operations.getHeadLines(input, 5);
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void getFileNameFromArgument() throws Exception {
+        HeadLib operations = new HeadLib();
+        String[] args = {"names.txt"};
+        String actualfileName = operations.getFileName(args);
+        assertEquals("names.txt", actualfileName);
+    }
+
+    @Test
+    public void getFileNameWhenFilenameIsNotSpecified() throws Exception {
+        HeadLib operations = new HeadLib();
+        String[] args = {"-n5"};
+        String actualFileName = operations.getFileName(args);
+        assertEquals(null, actualFileName);
+    }
 }
 
