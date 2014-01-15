@@ -52,4 +52,12 @@ public class WcLibTest {
         int actual = operation.countCharacters();
         assertEquals(actual, expected);
     }
+
+    @Test
+    public void countCharactersInMultipleLines() throws Exception {
+        WcLib operation = new WcLib("Kajal Anant Jadhav\r\nLaxit Anant Jadhav");
+        int expected = 38;
+        int actual = operation.countCharacters();
+        assertEquals(expected,actual);
+    }
 }
