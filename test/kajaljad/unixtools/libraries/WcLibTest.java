@@ -63,8 +63,8 @@ public class WcLibTest {
 
     @Test
     public void getFileNameWhenFileNameIsPresent() throws Exception {
-        String[] args = {"a.txt"};
-        String expected = "a.txt";
+        String[] args = {"names.txt"};
+        String expected = "names.txt";
         String actual = new WcFileHandler().getFileName(args);
         assertEquals(expected, actual);
     }
