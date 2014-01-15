@@ -38,4 +38,20 @@ public class TailOperationsTest {
         String actual = operations.getTailLines(input, 5);
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void getFileNameFromArgument() throws Exception {
+        TailOperations operations = new TailOperations();
+        String[] args = {"names.txt"};
+        String actualfileName = operations.getFileName(args);
+        assertEquals("names.txt", actualfileName);
+    }
+
+    @Test
+    public void getFileNameWhenFilenameIsNotSpecified() throws Exception {
+        TailOperations operations = new TailOperations();
+        String[] args = {"-n5"};
+        String actualFileName = operations.getFileName(args);
+        assertEquals(null, actualFileName);
+    }
 }
