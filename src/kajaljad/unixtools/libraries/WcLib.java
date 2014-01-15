@@ -1,26 +1,29 @@
 package kajaljad.unixtools.libraries;
 
 public class WcLib {
-    public int countLines(String text) {
-        int noOfLines = 0;
-        String[] result = text.split("\r\n");
-        for (String i : result) {
-            noOfLines += i.split("\n").length;
-        }
-        return noOfLines;
+    String fileData = "";
+    public WcLib(String fileData) {
+        this.fileData = fileData;
     }
 
-    public int countWords(String text) {
+    public int countLines() {
+        String[] result = fileData.split("\r\n");
+        return result.length;
+    }
+
+    public int countWords() {
         int noOfWords = 0;
-        String[] result = text.split("\r\n");
+        String[] result = fileData.split("\r\n");
         for (String item : result) {
             noOfWords += item.split(" ").length;
         }
         return noOfWords;
     }
 
-    public int countCharacters(String text) {
-        return text.length();
+    public int countCharacters() {
+        return fileData.length();
     }
+
 }
+
 

@@ -1,33 +1,23 @@
 package kajaljad.unixtools.libraries;
 
-import kajaljad.unixtools.libraries.WcLib;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 
 public class WcLibTest {
-    String input = "Kajal Anant Jadhav\r\nLaxit Anant Jadhav\r\nVaidehi Sunil Jadhav";
     @Test
-    public void testCountLines() throws Exception {
-        WcLib wc = new WcLib();
+    public void countLines() throws Exception {
+        WcLib operation = new WcLib("Kajal\r\nAnant\r\nJadhav");
         int expected = 3;
-        int actual = wc.countLines(input);
-        assertEquals(expected,actual);
+        int actual = operation.countLines();
+        assertEquals(actual, expected);
     }
 
     @Test
-    public void testCountWords() throws Exception {
-        WcLib wc = new WcLib();
-        int expected = 9;
-        int actual = wc.countWords(input);
-        assertEquals(expected,actual);
-    }
-
-    @Test
-    public void testCountCharacters() throws Exception {
-        WcLib wc = new WcLib();
-        int expected = 60;
-        int actual = wc.countCharacters(input);
-        assertEquals(expected,actual);
+    public void countLinesWhenEmptyLineIsPresentInEnd() throws Exception {
+        WcLib operation = new WcLib("Kajal\r\nAnant\r\nJadhav\r\n");
+        int expected = 3;
+        int actual = operation.countLines();
+        assertEquals(actual, expected);
     }
 }
