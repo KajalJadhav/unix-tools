@@ -38,5 +38,14 @@ public class HeadLibTest {
         String actual = operations.getHeadLines(input, 5);
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void getHeadLinesWhenSpecifiedNumberOfLinesAreNotThere() throws Exception {
+        HeadLib operations = new HeadLib();
+        String input = "Kajal\r\nAnant\r\nJadhav\r\n";
+        String expected = "Kajal\r\nAnant\r\nJadhav\r\n";
+        String actual = operations.getHeadLines(input, 5);
+        assertEquals(expected, actual);
+    }
 }
 
