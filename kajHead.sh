@@ -1,1 +1,1 @@
-java -cp $UNIXTOOLS_SH/unix-tools.jar kajaljad.unixtools.cli.Head $1 $2
+java -cp $UNIXTOOLS_SH/lib/unix-tools.jar kajaljad.unixtools.cli.Head $1 $2

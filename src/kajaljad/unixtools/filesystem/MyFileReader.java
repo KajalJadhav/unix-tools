@@ -18,7 +18,7 @@ public class MyFileReader {
             }
             scanner.close();
         } catch (FileNotFoundException e) {
-            System.out.println("File Not Found");
+            System.err.println("File Not Found");
         }
         return fileContent;
     }
