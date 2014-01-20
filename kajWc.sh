@@ -1,1 +1,1 @@
-java -cp $UNIXTOOLS_SH/lib/unix-tools.jar cli.WC $1
+java -cp $UNIXTOOLS_SH/lib/unix-tools.jar kajaljad.unixtools.cli.WC $1
