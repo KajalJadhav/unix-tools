@@ -1,36 +1,57 @@
-<project name="unix-tools">
+<project name="unix-tools" basedir=".">
+    <property name="test-dir" location="test"/>
+    <property name="build" location="build"/>
+    <property name="src" location="src"/>
+    <target name="init">
+        <mkdir dir="build/test"/>
+        <mkdir dir="build/src"/>
+    </target>
+    <target name="compile-source" depends="init">
+        <javac srcdir="src" destdir="build/src" includeantruntime="false"/>
+    </target>
+    <target name="compile-tests" depends="compile-source">
+        <javac srcdir="test" destdir="build/test"
+               classpath="test;build/src;lib/junit-4.10.jar"/>
+    </target>
+    <target name="run-tests" depends="compile-tests">
+        <java classpath="lib/junit-4.10.jar;build/src;build/test" classname="org.junit.runner.JUnitCore">
+            <arg value="kajaljad.unixtools.libraries.WcLibTest"/>
+            <arg value="kajaljad.unixtools.libraries.CutOperationsTest"/>
+            <arg value="kajaljad.unixtools.libraries.HeadLibTest"/>
+            <arg value="kajaljad.unixtools.libraries.ReduceSpaceOperationsTest"/>
+            <arg value="kajaljad.unixtools.libraries.SortOperationsTest"/>
+            <arg value="kajaljad.unixtools.libraries.TailOperationsTest"/>
+            <arg value="kajaljad.unixtools.libraries.UniqOperationsTest"/>
+        </java>
+    </target>
+
+    <target name="createJarFile" depends="run-tests">
+        <mkdir dir="unix-tools_dist/lib"/>
+        <mkdir dir="unix-tools_dist/bin"/>
+        <jar destfile="unix-tools_dist/lib/unix-tools.jar" basedir="build/src"/>
+    </target>
+
+    <target name="copyShellScripts" depends="createJarFile">
+        <copy file="kajCut.sh" todir="unix-tools_dist/bin"/>
+        <copy file="kajHead.sh" todir="unix-tools_dist/bin"/>
+        <copy file="kajSort.sh" todir="unix-tools_dist/bin"/>
+        <copy file="kajReduceSpaces.sh" todir="unix-tools_dist/bin"/>
+        <copy file="kajTail.sh" todir="unix-tools_dist/bin"/>
+        <copy file="kajUniq.sh" todir="unix-tools_dist/bin"/>
+        <copy file="kajWc.sh" todir="unix-tools_dist/bin"/>
+    </target>
+
+    <target name="copyReadme" depends="copyShellScripts">
+        <copy file="README.md" todir="unix-tools_dist"/>
+    </target>
+
+    <target name="dist" depends="copyReadme">
+        <zip zipfile="unix-tools.zip" basedir="unix-tools_dist"/>
+    </target>
+
     <target name="clean">
-        <delete dir="classes"></delete>
-        <delete dir="unix-tools"></delete>
-        <delete dir="unix-tools/lib"></delete>
-        <delete dir="unix-tools/bin"></delete>
-    </target>
-    <target name="compile">
-        <mkdir dir="classes"></mkdir>
-        <javac srcdir="src" destdir="classes"></javac>
-    </target>
-    <target name="createDirectory" depends="compile">
-        <mkdir dir="unix-tools"></mkdir>
-        <mkdir dir="unix-tools/lib"></mkdir>
-        <mkdir dir="unix-tools/bin"></mkdir>
-    </target>
-    <target name="createJarFile" depends="createDirectory">
-        <jar destfile="unix-tools/lib/unix-tools.jar" basedir="classes"></jar>
-    </target>
-    <target name="copyShellFiles" depends="createJarFile">
-        <copy file="kajSort.sh" todir="unix-tools/bin"></copy>
-        <copy file="kajHead.sh" todir="unix-tools/bin"></copy>
-        <copy file="kajTail.sh" todir="unix-tools/bin"></copy>
-        <copy file="kajUniq.sh" todir="unix-tools/bin"></copy>
-        <copy file="kajWc.sh" todir="unix-tools/bin"></copy>
-        <copy file="kajCut.sh" todir="unix-tools/bin"></copy>
-        <copy file="kajReduceSpaces.sh" todir="unix-tools/bin"></copy>
-    </target>
-    <target name="createZip" depends="createJarFile">
-        <zip zipfile="unix-tools.zip" basedir="unix-tools"></zip>
-    </target>
-    <target name="copyReadMe" depends="copyShellFiles">
-        <copy file="README.md" todir="unix-tools"></copy>
+        <delete dir="build"/>
+        <delete dir="unix-tools_dist"/>
+        <delete file="unix-tools.zip"/>
     </target>
 </project>
-
