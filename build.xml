@@ -1,4 +1,4 @@
-<project name="unix-tools" default = "run-tests">
+<project name="unix-tools" default="run-tests">
     <target name="clean">
         <delete dir="build"/>
     </target>
@@ -18,49 +18,122 @@
         <mkdir dir="build/code-coverage/coverage/summary-xml"/>
     </target>
 
+    <path id="cobertura.classpath">
+        <fileset dir="lib">
+            <include name="cobertura-2.0.1.jar"/>
+            <include name="lib/**/*.jar"/>
+        </fileset>
+    </path>
+
+    <taskdef classpathref="cobertura.classpath" resource="tasks.properties"/>
+
     <target name="compile-source" depends="init">
-        <javac srcdir="src" destdir="build/classes/src" includeantruntime="false"/>
+        <javac srcdir="src" destdir="build/classes/src" includeAntRuntime="false" debug="yes">
+            <classpath refid="cobertura.classpath"/>
+        </javac>
     </target>
 
     <target name="compile-tests" depends="compile-source">
-        <javac srcdir="test" destdir="build/classes/test"
-               classpath="test;build/classes/src;lib/junit-4.10.jar"/>
+        <javac srcdir="test" destdir="build/classes/test" debug="yes"
+               classpath="test;build/classes/src;lib/junit-4.10.jar">
+        <classpath refid="cobertura.classpath"/>
+        </javac>
     </target>
 
-    <target name="run-tests" depends="compile-tests">
-        <java classpath="lib/junit-4.10.jar;build/classes/src;build/classes/test" classname="org.junit.runner.JUnitCore">
-            <arg value="kajaljad.unixtools.libraries.WcLibTest"/>
-            <arg value="kajaljad.unixtools.libraries.CutOperationsTest"/>
-            <arg value="kajaljad.unixtools.libraries.HeadLibTest"/>
-            <arg value="kajaljad.unixtools.libraries.ReduceSpaceOperationsTest"/>
-            <arg value="kajaljad.unixtools.libraries.SortOperationsTest"/>
-            <arg value="kajaljad.unixtools.libraries.TailOperationsTest"/>
-            <arg value="kajaljad.unixtools.libraries.UniqOperationsTest"/>
-        </java>
+    <target name="instrument" >
+        <delete file="cobertura.ser"/>
+        <delete dir="build/code-coverage/instrumented" />
+        <cobertura-instrument todir="build/code-coverage/instrumented">
+            <fileset dir="build/classes/src">
+                <include name="**/*.class" />
+            </fileset>
+        </cobertura-instrument>
     </target>
 
-    <target name="createJarFile" depends="run-tests">
-        <mkdir dir="unix-tools_dist/lib"/>
-        <mkdir dir="unix-tools_dist/bin"/>
-        <jar destfile="unix-tools_dist/lib/unix-tools.jar" basedir="build/classes/src"/>
+    <target name="run-tests" >
+        <junit fork="yes" dir="." failureProperty="test.failed">
+            <classpath>
+                <pathelement location="build/code-coverage/instrumented"/>
+                <pathelement location="build/classes/src" />
+                <pathelement location="build/classes/test" />
+                <pathelement location="lib/junit-4.10.jar"/>
+            </classpath>
+
+            <classpath refid= "cobertura.classpath"/>
+
+            <formatter type="xml" />
+            <test name="testcase" todir="build/code-coverage/reports/xml" if="testcase" />
+            <batchtest todir="build/code-coverage/reports/xml" unless="testcase">
+                <fileset dir="test" >
+                    <include name="**/*Test.java"  />
+                </fileset>
+            </batchtest>
+        </junit>
+        <junitreport todir="build/code-coverage/reports/xml">
+            <fileset dir="build/code-coverage/reports/xml">
+                <include name="TEST-*.xml" />
+            </fileset>
+            <report format="frames" todir="build/code-coverage/reports/html" />
+        </junitreport>
     </target>
 
-    <target name="copyShellScripts" depends="createJarFile">
-        <copy file="kajCut.sh" todir="unix-tools_dist/bin"/>
-        <copy file="kajHead.sh" todir="unix-tools_dist/bin"/>
-        <copy file="kajSort.sh" todir="unix-tools_dist/bin"/>
-        <copy file="kajReduceSpaces.sh" todir="unix-tools_dist/bin"/>
-        <copy file="kajTail.sh" todir="unix-tools_dist/bin"/>
-        <copy file="kajUniq.sh" todir="unix-tools_dist/bin"/>
-        <copy file="kajWc.sh" todir="unix-tools_dist/bin"/>
+    <target name="coverage-check">
+        <cobertura-check branchrate="34" totallinerate="100" />
+    </target>
+
+    <target name="coverage-report">
+        <cobertura-report srcdir="src" destdir="build/code-coverage/coverage/xml" format="xml" />
+    </target>
+
+    <target name="summary-coverage-report">
+        <cobertura-report srcdir="src" destdir="build/code-coverage/coverage/summaryxml" format="summaryXml" />
+    </target>
+
+    <target name="alternate-coverage-report">
+        <cobertura-report destdir="build/code-coverage/coverage/html">
+            <fileset dir="src">
+                <include name="**/*.java"/>
+            </fileset>
+        </cobertura-report>
+    </target>
+
+    <target name="coverage"
+            depends="compile-source,compile-tests,instrument,run-tests,coverage-report,summary-coverage-report,alternate-coverage-report"
+            description="Compile, instrument ourself, run the tests and generate JUnit and coverage reports."/>
+
+    <target name="createFolderStructure" depends="coverage">
+        <mkdir dir="build/distribute/bin"/>
+        <mkdir dir="build/distribute/lib"/>
+    </target>
+
+    <target name="copyShellScripts" depends="createFolderStructure">
+        <copy file="kajCut.sh" todir="build/distribute/bin"/>
+        <copy file="kajHead.sh" todir="build/distribute/bin"/>
+        <copy file="kajSort.sh" todir="build/distribute/bin"/>
+        <copy file="kajReduceSpaces.sh" todir="build/distribute/bin"/>
+        <copy file="kajTail.sh" todir="build/distribute/bin"/>
+        <copy file="kajUniq.sh" todir="build/distribute/bin"/>
+        <copy file="kajWc.sh" todir="build/distribute/bin"/>
+    </target>
+
+    <target name="build" depends="createFolderStructure">
+        <jar destfile="build/distribute/lib/unix-tools.jar" basedir="build/classes/src"/>
     </target>
 
     <target name="copyReadme" depends="copyShellScripts">
-        <copy file="README.md" todir="unix-tools_dist"/>
+        <copy file="README.md" todir="build/distribute"/>
     </target>
 
-    <target name="dist" depends="copyReadme">
-        <zip zipfile="unix-tools.zip" basedir="unix-tools_dist"/>
+    <target name="docs" depends="build">
+        <javadoc packagenames="kajaljad.unixtools.*"
+                 sourcepath="src"
+                 destdir="build/distribute/docs"
+                 author="true"
+                 version="true"/>
+    </target>
+
+    <target name="dist" depends="coverage,copyReadme,docs">
+        <zip zipfile="unix-tools.zip" basedir="build/distribute" update="true"/>
     </target>
 
 
