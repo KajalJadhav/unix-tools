@@ -1,4 +1,4 @@
-<project name="unix-tools" default="run-tests">
+<project name="unix-tools" default="dist">
     <target name="clean">
         <delete dir="build"/>
     </target>
