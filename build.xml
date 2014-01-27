@@ -114,6 +114,7 @@
         <copy file="kajTail.sh" todir="build/distribute/bin"/>
         <copy file="kajUniq.sh" todir="build/distribute/bin"/>
         <copy file="kajWc.sh" todir="build/distribute/bin"/>
+        <copy file="config.properties" todir="build/distribute/lib"/>
     </target>
 
     <target name="build" depends="createFolderStructure">
@@ -135,6 +136,5 @@
     <target name="dist" depends="coverage,copyReadme,docs">
         <zip zipfile="unix-tools.zip" basedir="build/distribute" update="true"/>
     </target>
-
 
 </project>
